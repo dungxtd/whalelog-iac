@@ -19,9 +19,9 @@ services:
     ports:
       - 80:80
       - 443:443
-    # volumes:
-    #   - ./nginx/:/etc/nginx/conf.d/
-    #   - /etc/letsencrypt:/etc/letsencrypt
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d/
+      # - /etc/letsencrypt:/etc/letsencrypt
     deploy:
       labels:
         - "traefik.enable=false" # Optional: Disable Traefik load balancing
