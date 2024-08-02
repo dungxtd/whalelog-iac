@@ -22,4 +22,36 @@ spec:
     app: redis
   ports:
   - protocol: TCP
-    port: 
+    port: 6379
+    targetPort: 6379
+  type: ClusterIP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: jackett
+spec:
+  selector:
+    app: jackett
+  ports:
+  - protocol: TCP
+    port: 9117
+    targetPort: 9117
+  type: ClusterIP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaresolverr
+spec:
+  selector:
+    app: flaresolverr
+  ports:
+  - protocol: TCP
+    port: 8191
+    targetPort: 8191
+  type: ClusterIP
