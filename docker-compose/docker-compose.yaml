@@ -18,7 +18,7 @@ services:
     image: nginx:latest
     ports:
       - 80:80
-      - 443:443
+      # - 443:443
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       # - /etc/letsencrypt:/etc/letsencrypt
@@ -26,11 +26,11 @@ services:
       labels:
         - "traefik.enable=false" # Optional: Disable Traefik load balancing
 
-  py:
-    image: dungxtd/py:0.1.0
-    restart: always
-    ports:
-      - 81:80
+  # py:
+  #   image: dungxtd/py:0.1.0
+  #   restart: always
+  #   ports:
+  #     - 81:80
 
   blog:
     image: dungxtd/whalelog:0.1.7
@@ -38,62 +38,62 @@ services:
     ports:
       - 82:3000
 
-  landing:
-    image: dungxtd/whale-landing:0.1.6
-    restart: always
-    ports:
-      - 83:3000
+  # landing:
+  #   image: dungxtd/whale-landing:0.1.6
+  #   restart: always
+  #   ports:
+  #     - 83:3000
 
-  api:
-    env_file: .env
-    image: dungxtd/whalestream-api:0.1.2
-    command: yarn start:prod
-    restart: unless-stopped
-    volumes:
-      - ./library:/usr/library
-    deploy:
-      mode: replicated
-      replicas: 3
-    ports:
-      - 84:4000
+  # api:
+  #   env_file: .env
+  #   image: dungxtd/whalestream-api:0.1.2
+  #   command: yarn start:prod
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./library:/usr/library
+  #   deploy:
+  #     mode: replicated
+  #     replicas: 3
+  #   ports:
+  #     - 84:4000
 
-  web:
-    env_file: .env
-    image: dungxtd/bobar-web:0.1.2
-    command: yarn start
-    restart: unless-stopped
-    ports:
-      - 85:3000
+  # web:
+  #   env_file: .env
+  #   image: dungxtd/bobar-web:0.1.2
+  #   command: yarn start
+  #   restart: unless-stopped
+  #   ports:
+  #     - 85:3000
 
-  postgres:
-    image: postgres:12-alpine
-    env_file: .env
-    restart: unless-stopped
-    volumes:
-      - db_data:/var/lib/postgresql/data
+  # postgres:
+  #   image: postgres:12-alpine
+  #   env_file: .env
+  #   restart: unless-stopped
+  #   volumes:
+  #     - db_data:/var/lib/postgresql/data
 
-  redis:
-    image: bitnami/redis:5.0.6
-    env_file: .env
-    restart: unless-stopped
-    volumes:
-      - redis_data:/bitnami/redis/data
+  # redis:
+  #   image: bitnami/redis:5.0.6
+  #   env_file: .env
+  #   restart: unless-stopped
+  #   volumes:
+  #     - redis_data:/bitnami/redis/data
 
-  jackett:
-    image: linuxserver/jackett
-    container_name: bobarr-jacket
-    env_file: .env
-    restart: unless-stopped
-    volumes:
-      - ./packages/jackett/config:/config
-      - ./packages/jackett/downloads:/downloads
-    deploy:
-      mode: replicated
-      replicas: 2
+  # jackett:
+  #   image: linuxserver/jackett
+  #   container_name: bobarr-jacket
+  #   env_file: .env
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./packages/jackett/config:/config
+  #     - ./packages/jackett/downloads:/downloads
+  #   deploy:
+  #     mode: replicated
+  #     replicas: 2
 
-  flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:latest
-    container_name: bobarr-flaresolverr
-    environment:
-      - LOG_LEVEL=info
-    restart: unless-stopped
+  # flaresolverr:
+  #   image: ghcr.io/flaresolverr/flaresolverr:latest
+  #   container_name: bobarr-flaresolverr
+  #   environment:
+  #     - LOG_LEVEL=info
+  #   restart: unless-stopped
