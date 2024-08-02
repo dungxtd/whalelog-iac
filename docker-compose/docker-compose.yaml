@@ -34,7 +34,6 @@ services:
 
   blog:
     image: dungxtd/whalelog:0.1.7
-    restart: always
     ports:
       - 82:3000
 
