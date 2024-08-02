@@ -1,12 +1,12 @@
-version: "3.6"
+version: "3.8"
 
-volumes:
-  web_build:
-  api_build:
-  api_node_modules:
-  web_node_modules:
-  db_data:
-  redis_data:
+# volumes:
+#   web_build:
+#   api_build:
+#   api_node_modules:
+#   web_node_modules:
+#   db_data:
+#   redis_data:
 
 
 networks:
@@ -35,10 +35,10 @@ services:
   #   ports:
   #     - 81:80
 
-  blog:
-    image: dungxtd/whalelog:0.1.7
-    ports:
-      - 82:3000
+  # blog:
+  #   image: dungxtd/whalelog:0.1.7
+  #   ports:
+  #     - 82:3000
 
   # landing:
   #   image: dungxtd/whale-landing:0.1.6
