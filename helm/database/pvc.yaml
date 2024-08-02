@@ -8,6 +8,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  storageClassName: local-path  # Update this to your StorageClass name
 
 ---
 
@@ -21,6 +22,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  storageClassName: local-path  # Update this to your StorageClass name
 
 ---
 
@@ -34,6 +36,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  storageClassName: local-path  # Update this to your StorageClass name
 
 ---
 
@@ -47,3 +50,4 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  storageClassName: local-path  # Update this to your StorageClass name
