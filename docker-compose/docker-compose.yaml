@@ -25,6 +25,9 @@ services:
     deploy:
       labels:
         - "traefik.enable=false" # Optional: Disable Traefik load balancing
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 
   # py:
   #   image: dungxtd/py:0.1.0
