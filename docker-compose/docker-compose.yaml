@@ -20,7 +20,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./nginx/:/etc/nginx/conf.d/
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       # - /etc/letsencrypt:/etc/letsencrypt
     deploy:
       labels:
@@ -29,14 +29,20 @@ services:
   py:
     image: dungxtd/py:0.1.0
     restart: always
+    ports:
+      - 81:80
 
   blog:
     image: dungxtd/whalelog:0.1.7
     restart: always
+    ports:
+      - 82:3000
 
   landing:
     image: dungxtd/whale-landing:0.1.6
     restart: always
+    ports:
+      - 83:3000
 
   api:
     env_file: .env
@@ -48,12 +54,16 @@ services:
     deploy:
       mode: replicated
       replicas: 3
+    ports:
+      - 84:4000
 
   web:
     env_file: .env
     image: dungxtd/bobar-web:0.1.2
     command: yarn start
     restart: unless-stopped
+    ports:
+      - 85:3000
 
   postgres:
     image: postgres:12-alpine
