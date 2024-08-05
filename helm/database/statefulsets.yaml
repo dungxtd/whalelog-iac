@@ -3,36 +3,40 @@ kind: StatefulSet
 metadata:
   name: postgres
 spec:
-  serviceName: "postgres"
-  replicas: 1
   selector:
     matchLabels:
       app: postgres
+  serviceName: "postgres"
+  replicas: 1
   template:
     metadata:
       labels:
         app: postgres
     spec:
       containers:
-      - name: postgres
-        image: postgres:12-alpine
-        envFrom:
-        - configMapRef:
-            name: app-config
-        - secretRef:
-            name: app-secrets
-        volumeMounts:
-        - mountPath: /var/lib/postgresql/data
-          name: postgres-storage
+        - name: postgres
+          image: postgres:16.2-alpine
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+              subPath: data
+          envFrom:
+          - configMapRef:
+              name: whalestream-api-config
+          - secretRef:
+              name: whalestream-api-secret
   volumeClaimTemplates:
   - metadata:
-      name: postgres-storage
+      name: postgres-data
     spec:
-      accessModes: ["ReadWriteOnce"]
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "longhorn"
       resources:
         requests:
           storage: 1Gi
-      storageClassName: local-path
+
 
 ---
 
@@ -53,93 +57,30 @@ spec:
     spec:
       containers:
       - name: redis
-        image: bitnami/redis:5.0.6
+        image: redis
+        args: ["--appendonly", "yes"]
+        ports:
+          - name: redis
+            containerPort: 6379
         envFrom:
         - configMapRef:
-            name: app-config
+            name: whalestream-api-config
         - secretRef:
-            name: app-secrets
+            name: whalestream-api-secret
         volumeMounts:
-        - mountPath: /bitnami/redis/data
+        - mountPath: /data
           name: redis-storage
+        env:
+        - name: ALLOW_EMPTY_PASSWORD
+          value: "yes"
   volumeClaimTemplates:
   - metadata:
       name: redis-storage
     spec:
-      accessModes: ["ReadWriteOnce"]
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "longhorn"
       resources:
         requests:
           storage: 1Gi
-      storageClassName: local-path
 
 ---
-
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: jackett
-spec:
-  serviceName: "jackett"
-  replicas: 2
-  selector:
-    matchLabels:
-      app: jackett
-  template:
-    metadata:
-      labels:
-        app: jackett
-    spec:
-      containers:
-      - name: jackett
-        image: linuxserver/jackett
-        envFrom:
-        - configMapRef:
-            name: app-config
-        - secretRef:
-            name: app-secrets
-        volumeMounts:
-        - mountPath: /config
-          name: jackett-config-storage
-        - mountPath: /downloads
-          name: jackett-downloads-storage
-  volumeClaimTemplates:
-  - metadata:
-      name: jackett-config-storage
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
-      storageClassName: local-path
-  - metadata:
-      name: jackett-downloads-storage
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
-      storageClassName: local-path
-
----
-
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: flaresolverr
-spec:
-  serviceName: "flaresolverr"
-  replicas: 1
-  selector:
-    matchLabels:
-      app: flaresolverr
-  template:
-    metadata:
-      labels:
-        app: flaresolverr
-    spec:
-      containers:
-      - name: flaresolverr
-        image: ghcr.io/flaresolverr/flaresolverr:latest
-        env:
-        - name: LOG_LEVEL
-          value: info

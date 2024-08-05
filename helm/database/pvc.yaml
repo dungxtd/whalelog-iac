@@ -1,53 +1,13 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: postgres-pvc
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: local-path  # Update this to your StorageClass name
 
 ---
 
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: redis-pvc
+  name: jackett-config
 spec:
-  accessModes:
-  - ReadWriteOnce
+  accessModes: ["ReadWriteMany"]
   resources:
     requests:
       storage: 1Gi
-  storageClassName: local-path  # Update this to your StorageClass name
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jackett-config-pvc
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: local-path  # Update this to your StorageClass name
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jackett-downloads-pvc
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: local-path  # Update this to your StorageClass name
+  storageClassName: longhorn

@@ -39,7 +39,7 @@ spec:
   - protocol: TCP
     port: 9117
     targetPort: 9117
-  type: ClusterIP
+  type: LoadBalancer
 
 ---
 
@@ -54,4 +54,4 @@ spec:
   - protocol: TCP
     port: 8191
     targetPort: 8191
-  type: ClusterIP
+  type: LoadBalancer
