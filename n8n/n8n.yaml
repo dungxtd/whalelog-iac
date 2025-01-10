@@ -1,0 +1,23 @@
+config:
+  database:
+    type: postgresdb
+    postgresdb:
+      database: n8n
+      host: postgres
+secret:
+  database:
+    postgresdb:
+      user: bobarr
+      password: bobarr
+extraEnv:
+  # N8N_HOST: "n8n.whalelog.com"
+  # N8N_PROTOCOL: https
+  WEBHOOK_TUNNEL_URL: "https://n8n.whalelog.com/n8n/"
+  WEBHOOK_URL: "https://n8n.whalelog.com"
+  N8N_EDITOR_BASE_URL: "https://n8n.whalelog.com"
+  N8N_SECURE_COOKIE: "false"
+  GENERIC_TIMEZONE: "Asia/Ho_Chi_Minh"
+service:
+  type: LoadBalancer
+image:
+  tag: "1.74.0"
