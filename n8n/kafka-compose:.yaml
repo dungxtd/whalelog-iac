@@ -69,6 +69,7 @@ services:
       KAFKA_CLUSTERS_0_NAME: r4zt_wrqTRuT7W2NJsB_GA
     ports:
       - "8080:8080"
+
 volumes:
   postgres-data:
     driver: local
