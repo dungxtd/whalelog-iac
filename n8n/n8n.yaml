@@ -20,7 +20,7 @@ extraEnv:
   N8N_ENCRYPTION_KEY: hehehe
   N8N_BASIC_AUTH_USER: dungxtd20@gmail.com
   N8N_BASIC_AUTH_PASSWORD: Ikblue=1
-  # N8N_LICENSE_ACTIVATION_KEY: 7f23008c-31a1-4d30-ae16-16a4d3a4fe0b
+  # N8N_LICENSE_ACTIVATION_KEY: 133495e8-0143-41c3-84e9-5e71612ba840
 service:
   type: LoadBalancer
 image:
